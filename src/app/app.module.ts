@@ -11,8 +11,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { FormatTimePipe } from './pipes/format-time.pipe';
+import { VideoComponent } from './components/video/video.component';
 @NgModule({
-  declarations: [AppComponent, CommentDialogComponent, FormatTimePipe],
+  declarations: [AppComponent, CommentDialogComponent, FormatTimePipe, VideoComponent],
   imports: [
     BrowserModule,
     FormsModule,

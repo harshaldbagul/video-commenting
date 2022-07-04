@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class FormatTimePipe implements PipeTransform {
   transform(timeInSeconds: number): string {
-    if (!timeInSeconds) return '';
+    if (isNaN(timeInSeconds)) return '';
 
     const h = Math.floor(timeInSeconds / 3600);
     const m = Math.floor((timeInSeconds % 3600) / 60);

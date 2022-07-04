@@ -1,0 +1,63 @@
+<div class="container">
+  <div class="video-container">
+    <video
+      autoplay
+      class="video"
+      #videoPlayer
+      (timeupdate)="updateProgressBarPosition()"
+      [src]="VIDEO_URL"
+      type="video/mp4"
+    ></video>
+
+    <div class="controls-container">
+      <div
+        class="progress-bar-container"
+        #progressBar
+        (click)="onSeek(seekTo)"
+        (contextmenu)="openCommentDialog($event)"
+        (mousemove)="updateSeek($event, progressBar)"
+      >
+        <div class="progress-bar" [style.width.%]="progressBarPosition"></div>
+      </div>
+      <div [style.left.px]="seekTooltipPosition" class="seek-tooltip">
+        {{ seekTo | formatTime }}
+      </div>
+
+      <div class="controls">
+        <button
+          [ngClass]="videoPlayer.paused || videoPlayer.ended ? 'play' : 'pause'"
+          (click)="togglePlayPause()"
+        ></button>
+        <div *ngIf="videoPlayer.duration" class="time-info">
+          <span id="time-elapsed">{{
+            videoPlayer.currentTime | formatTime
+          }}</span>
+          <span> / </span>
+          <span id="duration">{{ videoPlayer.duration | formatTime }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="comment-container">
+    <h2>Video Comments:</h2>
+    <ng-container *ngIf="videoComments.length > 0; else emptyComments">
+      <div class="comment" *ngFor="let comment of videoComments">
+        <span class="comment-timestamp">
+          <a href="javascript:void(0);" (click)="onSeek(comment.timestamp)">
+            {{ comment.timestamp | formatTime }}
+          </a>
+        </span>
+        <p class="comment-text">{{ comment.text }}</p>
+      </div>
+    </ng-container>
+    <ng-template #emptyComments>
+      <div class="empty-comments">
+        <p>No comments to show.</p>
+        <p class="info">
+          Start adding comments by right clicking on seekbar ..
+        </p>
+      </div>
+    </ng-template>
+  </div>
+</div>
